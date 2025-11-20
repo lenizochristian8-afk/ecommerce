@@ -51,7 +51,7 @@ class BrandResource extends Resource
                     ]),
                     FileUpload::make('image')
                         ->image()
-                        ->directory('categories')
+                        ->directory('brands')
                         ->disk('public'),
 
                     Toggle::make('is_active')
@@ -65,11 +65,11 @@ class BrandResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('name'),
+                    //->searchable(),
                 Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('slug')
-                    ->searchable(),               
+                Tables\Columns\TextColumn::make('slug'),
+                    //->searchable(),               
                 Tables\Columns\IconColumn::make('is_active')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
