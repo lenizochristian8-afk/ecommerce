@@ -23,6 +23,7 @@ use Illuminate\Support\Str;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Actions\ActionGroup;
 
 
 
@@ -117,8 +118,8 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name'),
-                //->searchable(),
+                TextColumn::make('name')
+                ->searchable(),
 
                 TextColumn::make('category.name')
                 ->sortable(),
@@ -144,22 +145,25 @@ class ProductResource extends Resource
 
                 TextColumn::make('created_at')
                 ->dateTime()
-                ->sortable(),
-                //->toggleable(isToggledHiddenByDefault: true),
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('updated_at')
                 ->dateTime()
-                ->sortable(),
-                //->toggleable(isToggledHiddenByDefault: true),
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                /*SelectFilter::make('category')
-                    ->relationship('category', 'name'),*/
+                SelectFilter::make('category')
+                    ->relationship('category', 'name')
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                //Tables\Actions\DeleteAction::make(),
-                //Tables\Actions\ViewAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\ViewAction::make(),
+                    ])
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

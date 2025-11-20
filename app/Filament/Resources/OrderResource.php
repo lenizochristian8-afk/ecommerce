@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use Illuminate\Support\Number;
 use App\Filament\Resources\OrderResource\Pages;
 use App\Filament\Resources\OrderResource\RelationManagers;
+use App\Filament\Resources\OrderResource\RelationManagers\AddressRelationManager;
 use App\Models\Order;
 use App\Models\Product;
 use Filament\Forms;
@@ -31,7 +32,7 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
-
+use Filament\Forms\Components\ToggleButtons;
 
 
 
@@ -52,7 +53,7 @@ class OrderResource extends Resource
                         Select::make('user_id')
                         ->label('Customer')
                         ->relationship('user', 'name')
-                        //->searchable()
+                        ->searchable()
                         ->preload()
                         ->required(),
 
@@ -72,7 +73,7 @@ class OrderResource extends Resource
                         ->default('pending')
                         ->required(),
 
-                        Radio::make('status')
+                        ToggleButtons::make('status')
                         ->inline()
                         ->default('new')
                         ->required()
@@ -82,14 +83,14 @@ class OrderResource extends Resource
                             'shipped' => 'Shipped',
                             'delivered' => 'Delivered',
                             'cancelled' => 'Cancelled',
-                        ]),
-                        /*->colors([
+                        ])
+                        ->colors([
                             'new' => 'primary',
                             'processing' => 'warning',
                             'shipped' => 'info',
                             'delivered' => 'success',
                             'cancelled' => 'danger',
-                        ])*/
+                        ]),
                         Select::make('currency')
                         ->options([
                             'USD' => 'USD',
@@ -120,7 +121,7 @@ class OrderResource extends Resource
 
                             Select::make('product_id')
                             ->relationship('product', 'name')
-                            //->searchable()
+                            ->searchable()
                             ->required()
                             ->preload()
                             ->distinct()
@@ -187,7 +188,7 @@ class OrderResource extends Resource
             ->columns([
                 TextColumn::make('user.name')
                 ->label('Customer')
-                //->searchable()
+                ->searchable()
                 ->sortable(),
                 
 
@@ -235,7 +236,7 @@ class OrderResource extends Resource
                 ActionGroup::make([
                     ViewAction::make(),
                     EditAction::make(),
-                    //DeleteAction::make(),
+                    DeleteAction::make(),
                 ]),
             ])
             ->bulkActions([
@@ -248,7 +249,7 @@ class OrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AddressRelationManager::class
         ];
     }
 

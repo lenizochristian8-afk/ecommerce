@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\ActionGroup;
 
 class UserResource extends Resource
 {
@@ -50,11 +51,11 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                    //->searchable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
 
-                Tables\Columns\TextColumn::make('email'),
-                    //->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
 
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->dateTime()
@@ -68,9 +69,11 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-               //Tables\Actions\ViewAction::make(),
-               Tables\Actions\EditAction::make(),
-               //Tables\Actions\DeleteAction::make(),              
+               ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                    Tables\Actions\ViewAction::make(),
+                    ])             
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
