@@ -33,7 +33,7 @@ class CartManagement
                     'quantity' => 1,
                     'unit_amount' => $product->price,
                     'total_amount' => $product->price
-                ]
+                ];
             }
         }
         self::addCartItemstoCookie($cart_items);
@@ -71,7 +71,7 @@ class CartManagement
       if (!$cart_items) {
          $cart_items = [];
       }
-      return $cartItems;
+      return $cart_items;
    }
    //increment item quantity
    static public function incrementQuantityToCartItem($product_id){
